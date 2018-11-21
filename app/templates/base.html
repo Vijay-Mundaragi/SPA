@@ -1,0 +1,66 @@
+{% extends 'bootstrap/base.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>Application Home Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+    <script src="static/js/home.js"></script>
+</head>
+
+{% block navbar %}
+    <!-- <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Create</a></li>
+                    <li><a href="#">Read</a></li>
+                    <li><a href="#">Update</a></li>
+                    <li><a href="#">Delete</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav> -->
+    <center>
+    <br>
+    <button id="create" type="button" class="btn btn-primary">CREATE</button>
+    <button id="read" type="button" class="btn btn-primary">READ</button>
+    <button id="update" type="button" class="btn btn-primary">UPDATE</button>
+    <button id="delete" type="button" class="btn btn-primary">DELETE</button>
+
+    </center>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {# application content needs to be provided in the app_content block #}
+        {% block app_content %}{% endblock %}
+        
+    
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="static/js/home.js"></script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">USN</th>
+      <th scope="col">Fname</th>
+      <th scope="col">Lname</th>
+      <th scope="col">GPA</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in data %}
+    <tr>
+      <th scope="row">{{ student["usn"] }}</th>
+      <td>{{ student["fname"] }}</td>
+      <td>{{ student["lanme"] }}</td>
+      <td>{{ student["gpa"] }}</td>
+      <td>{{ student["email"] }}</td>
+      <td>{{ student["pno"] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

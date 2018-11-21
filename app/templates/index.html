@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+	<div id="div1">
+		{% if form %}
+	    {{ wtf.quick_form(form, id="create_form")}}
+	    {% endif %}
+    <div>
+{% endblock %}
