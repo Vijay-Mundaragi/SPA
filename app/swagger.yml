@@ -41,8 +41,7 @@ paths:
                   type: string
                 lname:
                   type: string
-                timestamp:
-                  type: string
+                
 
     post:
       operationId: app.student.create
@@ -68,7 +67,7 @@ paths:
         201:
           description: Successfully created student in list
 
-  /student/{lname}:
+  /student/{usn}:
     get:
       operationId: app.student.read_one
       tags:
@@ -76,7 +75,7 @@ paths:
       summary: Read one student from the student list
       description: Read one student from the student list
       parameters:
-        - name: lname
+        - name: usn
           in: path
           description: Last name of the student to get from the list
           type: string
@@ -90,8 +89,6 @@ paths:
                 type: string
               lname:
                 type: string
-              timestamp:
-                type: string
 
     put:
       operationId: app.student.update
@@ -100,10 +97,10 @@ paths:
       summary: Update a student in the student list
       description: Update a student in the student list
       parameters:
-        - name: lname
+        - name: usn
           in: path
           description: Last name of the student to update in the list
-          type: string
+          type: integer
           required: True
         - name: student
           in: body
@@ -125,9 +122,9 @@ paths:
       summary: Delete a student from the student list
       description: Delete a student
       parameters:
-        - name: lname
+        - name: usn
           in: path
-          type: string
+          type: integer
           required: True
       responses:
         200:

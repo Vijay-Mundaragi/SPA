@@ -2,54 +2,38 @@ from datetime import datetime
 from flask import make_response, abort, render_template, request
 import json
 
-from app import db
 from app.forms import StudentForm
+from app.models import Student, StudentSchema
+from app import DAL
 
-Students = {
-    "Mundaragi": {
-    	"usn":1,
-        "fname": "Vijay",
-        "lname": "Mundaragi",
-        "gpa":9,
-        "email":"abc@gmail.com",
-        "phone":9449494494
-    },
-    "Mundaragi_1": {
-    	"usn":2,
-        "fname": "Vijay",
-        "lname": "Mundaragi",
-        "gpa":9,
-        "email":"abc@gmail.com",
-        "phone":9449494494
-    }
-}
+pass_response = {"res": "Operation Successfully"}
+err_response = {"res": "Failed"}
 
-response = {"res": "Successfully created"}
+def helper(std):
+    if std:
+        student_schema = StudentSchema(many=True)
+        data = student_schema.dump(std).data
+        return data
+    else:
+        return {}
 
 def create(student):
-    print(request.form)
-    print(student)
-    print(student["lname"])
-    print(student["fname"])
-    
-    # if True:
-    #     sdt = Student(fname=student.fname, lanme=student.fname, gpa=student.gpa, email=student.email, phone_no=student.phone)
-    #     db.session.add(std)
-    #     db.session.commit()
-    # return json.loads(response)
-
-    return response
+    DAL.add(student)
+    return json.dumps(pass_response)
 
 def read_all():
+    std = DAL.read_all()
+    return helper(std)
+    # return {"students": helper(std) }
 
-    # return render_template("get_response.html", data=Students)
-    return [Students[key] for key in Students.keys()]
+def read_one(usn=None): 
+    std = DAL.read_one(usn)
+    return helper(std)
 
-def read_one(lname):
-    pass
+def update(usn, student):
+    DAL.update(student=student)
+    return json.dumps(pass_response)    
 
-def update(lname, student):
-    pass
-
-def delete(lname):
-    pass
+def delete(usn=None):
+    DAL.delete(usn=usn)
+    return json.dumps(pass_response)

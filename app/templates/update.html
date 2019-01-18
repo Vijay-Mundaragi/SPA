@@ -6,7 +6,8 @@
     <br>
   <div id="div1" align="left">
     {% if form %}
-      <form class="form form-horizontal" id="create_form" style="width:25%; position:relative; left:40%">
+      <form class="form form-horizontal" id="update_form" style="width:25%; position:relative; left:40%">
+        {{ wtf.form_field(form.usn, readonly=true) }}
         {{ wtf.form_field(form.fname) }}
         {{ wtf.form_field(form.lname) }}
         {{ wtf.form_field(form.gpa) }}

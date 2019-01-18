@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<center>
+    <br>
+  <div id="div1" align="left">
+    {% if form %}
+      <form class="form form-horizontal" id="delete_form" style="width:25%; position:relative; left:40%">
+        {{ wtf.form_field(form.usn) }}
+        {{ wtf.form_field(form.submit) }}
+      </form>
+      {% endif %}
+      <br>
+    <div>
+</center>
+{% endblock %}

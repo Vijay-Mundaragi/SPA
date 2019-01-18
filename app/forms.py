@@ -3,7 +3,7 @@ from wtforms import StringField, DecimalField, IntegerField, SubmitField
 from wtforms.validators import DataRequired, Email, Length
 
 class StudentForm(FlaskForm):
-
+    usn = IntegerField("USN", validators=[DataRequired()])
     fname = StringField("First Name", validators=[DataRequired(), Length(min=1, max=140)], id="fname")
     lname = StringField("Last Name", validators=[DataRequired(), Length(min=1, max=140)], id="lname")
     email = StringField("Email", validators=[DataRequired(), Email(), Length(min=1, max=140)], id="email")

@@ -1,60 +1,148 @@
-$("#read").click(function() {
-	result = "<table class='table table-striped'>\
-  <thead>\
-    <tr>\
-      <th scope='col'>USN</th>\
-      <th scope='col'>Fname</th>\
-      <th scope='col'>Lname</th>\
-      <th scope='col'>GPA</th>\
-      <th scope='col'>Email</th>\
-      <th scope='col'>Phone</th>\
-    </tr>"
+function update_fn(data){
+  get_html(data, "/update");
+}
 
-	$.getJSON('/sample_spa/v1/student', function(data) {
-		console.log(data)
-		$.each(data, function(key, value)
-		{
-			result = result + "<tr><td>"+value.usn+"</td>"+"<td>"+value.fname+"</td>"+"<td>"+value.lname+"</td>"+"<td>"+value.gpa+"</td>"+"<td>"+value.email+"</td>"+"<td>"+value.phone+"</td></tr>";
-			console.log(result);
-		})
-		$("#div1").html(result);  
-	});  	
+
+function delete_fn(data){
+  console.log(data);
+  get_html(data, "/delete");
+}
+
+
+function get_html(data, url_info){
+  console.log(data);
+  var obj = {};
+  obj["id"] = data;
+  $.ajax({
+        type: "POST",
+        url: url_info,
+        dataType: "text html",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(obj),
+        success: function (data) {
+               $("html").html(data);
+            },
+            error: function () {
+             console.log("Error Occured");
+            }
+    });
+}
+
+
+function read_students(){
+    $.getJSON('/sample_spa/v1/student', function(data) {
+    obj = data
+    // console.log(obj)
+    $.ajax({
+        type: "POST",
+        url: "/student_list",
+        dataType: "text html",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(obj),
+        success: function (data) {
+               // console.log(data);
+               $("#div1").html(data);
+            },
+            error: function () {
+             console.log("Error Occured");
+             alert("Error Occurred")
+            }
+    });
+    });
+
+}
+
+
+$("#read").click(function() {
+	read_students();
+});
+
+
+$("#create").click(function() {
+  $.ajax({
+      type: "GET",
+            url: "/",
+            success: function (data) {
+               $("html").html(data);
+             }
+  });
 });
 
 
 $("#create_form").submit(function(event){
-	event.preventDefault();
-	var $items = $('#fname, #lname, #pno, #email, #gpa');
-	
-	var obj = {};
-	
-	$items.each(function() {
-	    obj[this.id] = $(this).val();
-	});
-
-	console.log(obj)
-
-	// $.post("/sample_spa/v1/student", obj, function(data){
-	// 	console.log(data);
-	// });
-
-	$.ajax({
+  event.preventDefault();
+  var $items = $('#fname, #lname, #pno, #email, #gpa');
+  var obj = {};
+  $items.each(function() {
+      obj[this.id] = $(this).val();
+  });
+  console.log(obj)
+  $.ajax({
             type: "POST",
             url: "/sample_spa/v1/student",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
             success: function (data) {
-               alert('Success');
+               console.log(data);
+               // alert("Successfully Created Student record");
+               read_students();
+            },
+            error: function () {
+             console.log("Error Occured");
+             alert("Error Occured");
+            
+            }
+        });
+});
 
+
+$("#update_form").submit(function(event){
+	event.preventDefault();
+	var $items = $('#usn, #fname, #lname, #pno, #email, #gpa');
+	var obj = {};
+	$items.each(function() {
+	    obj[this.id] = $(this).val();
+        console.log($(this).val());
+	});
+	console.log(obj)
+	$.ajax({
+            type: "PUT",
+            url: "/sample_spa/v1/student/"+$("#usn").val(),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(obj),
+            success: function (data) {
+               // alert('Success');
+               read_students();
             },
             error: function () {
              alert('Error');
             }
         });
+});
 
 
-	// $.post('/sample_spa/v1/student', function(data) {
-	// 	console.log(data); 	
-	// });
+$("#delete_form").submit(function(event){
+	event.preventDefault();
+	var $items = $('#usn');
+	var obj = {};
+	$items.each(function() {
+	    obj[this.id] = $(this).val();
+	});
+	console.log(obj)
+	$.ajax({
+            type: "DELETE",
+            url: "/sample_spa/v1/student/"+$("#usn").val(),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(obj),
+            success: function (data) {
+               // alert('Success');
+               read_students();
+            },
+            error: function () {
+             alert('Error');
+            }
+        });
 });
