@@ -28,7 +28,7 @@ paths:
         - name: offset
           in: query
           type: integer
-          description: Offset from beginning of list where to start gathering student
+          description: Offset from beginning of list where to start retrieving student list
           required: false
       responses:
         200:
@@ -37,11 +37,19 @@ paths:
             type: array
             items:
               properties:
+                usn:
+                  type: integer
                 fname:
                   type: string
                 lname:
                   type: string
-                
+                gpa:
+                  type: number
+                  multipleOf: 0.01
+                email:
+                  type: string
+                phone_no:
+                  type: number
 
     post:
       operationId: app.student.create
@@ -63,6 +71,13 @@ paths:
               lname:
                 type: string
                 description: Last name of student to create
+              gpa:
+                type: number
+                multipleOf: 0.01
+              email:
+                type: string
+              pno:
+                type: number
       responses:
         201:
           description: Successfully created student in list
@@ -85,10 +100,19 @@ paths:
           description: Successfully read student from student list operation
           schema:
             properties:
+              usn:
+                type: integer
               fname:
                 type: string
               lname:
                 type: string
+              gpa:
+                  type: number
+                  multipleOf: 0.01
+              email:
+                type: string
+              phone_no:
+                type: number
 
     put:
       operationId: app.student.update
@@ -107,10 +131,19 @@ paths:
           schema:
             type: object
             properties:
+              usn:
+                type: integer
               fname:
                 type: string
               lname:
                 type: string
+              gpa:
+                  type: number
+                  multipleOf: 0.01
+              email:
+                type: string
+              phone_no:
+                type: number
       responses:
         200:
           description: Successfully updated student in student list
